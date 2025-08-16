@@ -32,7 +32,9 @@ const Navbar = () => {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${isActive ? "text-primary/90 font-semibold bg-primary/10" : "hover:bg-primary/5 text-foreground hover:text-primary/90"
+        `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${isActive
+          ? "text-primary/90 font-semibold"
+          : "text-foreground hover:text-primary/90 hover:bg-primary/5"
         }`
       }
       onClick={() => setIsMenuOpen(false)}
@@ -60,7 +62,6 @@ const Navbar = () => {
     <nav className="bg-background sticky top-0 z-50 shadow-sm w-full border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold flex items-center">
             <span className="bg-primary text-primary-foreground px-3 py-1 rounded-lg mr-2">Study</span>
@@ -72,24 +73,25 @@ const Navbar = () => {
             <ul className="flex gap-2">{navItems}</ul>
           </div>
 
-          {/* Right Side: ModeToggle + Auth */}
+          {/* Right Side */}
           <div className="flex items-center gap-3">
-
+            {/* Mode Toggle */}
             {/* Mode Toggle with Icon */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-lg hover:bg-primary/10 transition-colors text-foreground"
+              className="flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-background text-foreground hover:bg-primary/10 transition-colors focus:outline-none shadow-sm"
+              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {theme === "dark" ? <FaSun /> : <FaMoon />}
+              {theme === "dark" ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-blue-500" />}
             </button>
 
-            {/* Auth Buttons or User Dropdown */}
+            {/* Auth Buttons */}
             {!user ? (
               <div className="hidden md:flex gap-2">
-                <NavLink to="/login" className="px-4 py-2 font-medium">{/* ShadCN colors */}
+                <NavLink to="/login" className="app-btn">
                   Login
                 </NavLink>
-                <NavLink to="/signup" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">
+                <NavLink to="/signup" className="app-btn">
                   Sign Up
                 </NavLink>
               </div>
@@ -122,10 +124,17 @@ const Navbar = () => {
                         <p className="text-xs truncate">{user.email}</p>
                       </div>
                     </div>
-                    <div className="p-2 flex flex-col">
-                      <NavLink to="/dashboard" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">Dashboard</NavLink>
-                      <NavLink to="/profile" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">Profile</NavLink>
-                      <button onClick={handleLogout} className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all text-left w-full">
+                    <div className="p-2 flex flex-col gap-2">
+                      <NavLink to="/dashboard" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">
+                        Dashboard
+                      </NavLink>
+                      <NavLink to="/profile" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">
+                        Profile
+                      </NavLink>
+                      <button
+                        onClick={handleLogout}
+                        className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all text-left w-full"
+                      >
                         Logout
                       </button>
                     </div>
@@ -138,7 +147,7 @@ const Navbar = () => {
             <div className="md:hidden ml-4">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-lg text-foreground hover:bg-primary/10 transition-all"
+                className="app-btn w-10 h-10 p-0 flex items-center justify-center"
               >
                 {isMenuOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
               </button>
@@ -155,14 +164,19 @@ const Navbar = () => {
 
             {!user ? (
               <div className="pt-2 border-t border-border flex flex-col gap-2">
-                <NavLink to="/login" className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-primary/5">Login</NavLink>
-                <NavLink to="/signup" className="block px-4 py-3 rounded-lg text-base font-medium bg-primary text-primary-foreground">Sign Up</NavLink>
+                <NavLink to="/login" className="app-btn w-full text-left">Login</NavLink>
+                <NavLink to="/signup" className="app-btn w-full text-left">Sign Up</NavLink>
               </div>
             ) : (
               <div className="pt-2 border-t border-border flex flex-col gap-2">
-                <NavLink to="/dashboard" className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-primary/5">Dashboard</NavLink>
-                <NavLink to="/profile" className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-primary/5">Profile</NavLink>
-                <button onClick={handleLogout} className="block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-primary/5">Logout</button>
+                <NavLink to="/dashboard" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">Dashboard</NavLink>
+                <NavLink to="/profile" className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all">Profile</NavLink>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-3 rounded-lg hover:bg-primary/5 text-foreground transition-all text-left w-full"
+                >
+                  Logout
+                </button>
               </div>
             )}
           </div>
